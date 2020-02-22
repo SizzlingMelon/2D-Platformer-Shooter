@@ -1,0 +1,54 @@
+//Init Variables
+[Range(-1, 1)]
+public float moveInput;
+public float speed;
+public float jumpForce;
+private bool isFacingRight;
+public bool isGrounded;
+public Transform groundCheck;
+public Vector2 checkSize;
+public LayerMask whatIsGround;
+
+public Rigidbody2D rb;
+
+void Start()
+	{ 
+		rb = GetComponent<Rigidbody2D>();
+		isFacingRight = true;
+	}
+void FixedUpdate()
+	{
+		moveInput = Input.GetAxisRaw("Horizontal");
+		rb.velocity = new Vector2(moveInput * speed * Time.deltaTime * 100, rb.velocity.y );
+		isGrounded = Physics2D.OverlapBox(groundCheck.position, checkSize, 0);    
+	}
+void Update()
+	{
+		//Jump if the Player Presses the SpaceBar
+		
+		if(Input.GetKeyDown(KeyCode.Space) && isGrounded == true)
+		{
+		rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+		}
+        
+		//Flip if Facing the Wrong Way (Left).
+		if (isFacingRight == false && moveInput > 0)
+		{
+			Flip();
+			isFacingRight = true;
+        }
+
+		//Flip if Facing the Wrong Way (Right).
+		else if(isFacingRight == true && moveInput < 0)
+		{
+			Flip();
+            isFacingRight = false;
+        }
+		
+    }
+    
+    void Flip()
+    {
+        transform.Rotate(0, 180, 0);
+    }
+    
