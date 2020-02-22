@@ -27,21 +27,16 @@ void FixedUpdate()
 void Update()
 	{
 	//-------------------Jumping-----------------------------------------\\
-		//Jump if the Player Presses the SpaceBar
-		
 		if(Input.GetKeyDown(KeyCode.Space) && isGrounded == true)
 		{
 		rb.velocity = new Vector2(rb.velocity.x, jumpForce);
 		}
         //-------------------Flip The character------------------------------\\
-		//Flip if Facing the Wrong Way (Left).
 		if (isFacingRight == false && moveInput > 0)
 		{
 			Flip();
 			isFacingRight = true;
         	}
-
-		//Flip if Facing the Wrong Way (Right).
 		else if(isFacingRight == true && moveInput < 0)
 		{
 			Flip();
